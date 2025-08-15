@@ -9,54 +9,66 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 5,
-        children: [
-          Text(FlavorConfig.instance.name, style: TextStyle(fontSize: 30),),
-          SizedBox(height: 10,),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/fcmScreen');
-            },
-            child: Text('FCM'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/animationScreen');
-            },
-            child: Text('Animation'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/designScreen');
-            },
-            child: Text('Design'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/effectScreen');
-            },
-            child: Text('Effect'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final cameras = await availableCameras();
-              final firstCamera = cameras.first;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SizedBox.expand(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 5,
+          children: [
+            Text(FlavorConfig.instance.name, style: TextStyle(fontSize: 30),),
+            const SizedBox(height: 10,),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/fcmScreen');
+              },
+              child: const Text('FCM'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/animationScreen');
+              },
+              child: const Text('Animation'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/designScreen');
+              },
+              child: const Text('Design'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/effectScreen');
+              },
+              child: const Text('Effect'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final cameras = await availableCameras();
+                if (cameras.isEmpty) {
+                  // Chạy code thay thế
+                  print('No cameras available');
+                  return;
+                }
 
-              Navigator.of(context).push(createRoute(TakePictureScreen(camera: firstCamera)));
-            },
-            child: Text('Camera'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/videoPlayerScreen');
-            },
-            child: Text('Video'),
-          ),
-        ],
+                final firstCamera = cameras.first;
+
+                if (!context.mounted) return;
+
+                Navigator.of(context).push(
+                  createRoute(TakePictureScreen(camera: firstCamera)),
+                );
+              },
+              child: const Text('Camera'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/videoPlayerScreen');
+              },
+              child: const Text('Video'),
+            ),
+          ],
+        ),
       ),
     );
   }
