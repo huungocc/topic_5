@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:phase_5/effect/download_button_screen.dart';
-import 'package:phase_5/effect/parallax_scrolling_screen.dart';
+import 'package:phase_5/effect/download_button/download_button_screen.dart';
+import 'package:phase_5/effect/parallax_scrolling/parallax_scrolling_screen.dart';
 import 'package:phase_5/effect/shimmer_loading_screen.dart';
 import 'package:phase_5/effect/staggered_menu_screen.dart';
 import 'package:phase_5/main_common.dart';

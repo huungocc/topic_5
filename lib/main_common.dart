@@ -3,8 +3,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:phase_5/app.dart';
 import 'package:phase_5/flavors/flavor_config.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> mainCommon({required Flavor flavor, required String baseUrl, required String name}) async {
+  await Supabase.initialize(
+    url: 'https://prqlrbkvrrqinwjnjqqu.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBycWxyYmt2cnJxaW53am5qcXF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0ODY5NzYsImV4cCI6MjA2ODA2Mjk3Nn0.2YkPuaci2h6QbCPAiQ19VURQKYAdf9IS289_9E88C-Y',
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

@@ -41,6 +41,12 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+    <string>Ứng dụng cần truy cập camera để chụp ảnh và quay video</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Ứng dụng cần truy cập microphone để quay video có âm thanh</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Ứng dụng cần truy cập thư viện ảnh để chọn ảnh và video</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

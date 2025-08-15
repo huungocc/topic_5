@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -25,6 +26,7 @@ class _FcmScreenState extends State<FcmScreen> {
     _setupFirebaseMessaging();
   }
 
+  // Cấu hình cho Android
   Future<void> _initializeNotifications() async {
     // Cấu hình local notifications
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -50,7 +52,7 @@ class _FcmScreenState extends State<FcmScreen> {
   }
 
   Future<void> _setupFirebaseMessaging() async {
-    // Yêu cầu permission
+    // 1. Request permission (iOS)
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       badge: true,
@@ -59,32 +61,39 @@ class _FcmScreenState extends State<FcmScreen> {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted permission');
+    } else {
+      print('User declined or has not accepted permission');
     }
 
-    // Lấy FCM token
+    // 2. Register APNs token (iOS only)
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      await messaging.setAutoInitEnabled(true);
+      String? apnsToken = await messaging.getAPNSToken();
+      print('APNs token: $apnsToken');
+    }
+
+    // 3. Lấy FCM token
     _token = await messaging.getToken();
-    print('FCM Token: $_token');
+    print('FCM token: $_token');
     setState(() {});
 
-    // Lắng nghe foreground messages
+    // 4. Lắng nghe foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+      print('Foreground message received!');
+      _addMessage('Foreground: ${message.notification?.title}');
 
       if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
         _showLocalNotification(message);
-        _addMessage('Foreground: ${message.notification?.title}');
       }
     });
 
-    // Xử lý khi app được mở từ notification
+    // 5. Lắng nghe khi app được mở từ notification (background)
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
+      print('App opened from notification!');
       _addMessage('Opened from notification: ${message.notification?.title}');
     });
 
-    // Kiểm tra nếu app được mở từ terminated state
+    // 6. Kiểm tra nếu app được mở từ terminated state
     RemoteMessage? initialMessage = await messaging.getInitialMessage();
     if (initialMessage != null) {
       _addMessage('App opened from terminated state: ${initialMessage.notification?.title}');

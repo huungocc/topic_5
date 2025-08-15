@@ -24,26 +24,26 @@ class MyApp extends StatelessWidget {
         '/videoPlayerScreen': (context) => VideoPlayerScreen(),
         '/effectScreen': (context) => EffectScreen(),
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.white,
-          // ···
-          brightness: Brightness.light,
-        ),
-        textTheme: TextTheme(
-          displayLarge: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-          // ···
-          titleLarge: GoogleFonts.oswald(
-            fontSize: 30,
-            fontStyle: FontStyle.italic,
-          ),
-          bodyMedium: GoogleFonts.merriweather(),
-          displaySmall: GoogleFonts.pacifico(),
-        ),
-      ),
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(
+      //     seedColor: Colors.white,
+      //     // ···
+      //     brightness: Brightness.light,
+      //   ),
+      //   textTheme: TextTheme(
+      //     displayLarge: const TextStyle(
+      //       fontSize: 30,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //     // ···
+      //     titleLarge: GoogleFonts.oswald(
+      //       fontSize: 30,
+      //       fontStyle: FontStyle.italic,
+      //     ),
+      //     bodyMedium: GoogleFonts.merriweather(),
+      //     displaySmall: GoogleFonts.pacifico(),
+      //   ),
+      // ),
     );
   }
 }
